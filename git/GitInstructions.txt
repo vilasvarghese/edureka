@@ -1,0 +1,166 @@
+
+Slide 39
+--------
+Install git on ubuntu
+	sudo apt-get install git
+
+Slide 40
+--------
+Setting up user
+	git config --global user.name "vilasvarghese"
+	git config --global user.email "vilas.edureka@edureka.com"
+	
+Slide 41
+--------
+Create local repository
+	
+	
+	mkdir demo
+	cd demo
+	git init
+	ls -a
+		- .git folder would be present.
+		
+	Create 
+		Abc.txt
+		Xyz.txt
+	ls -a
+	
+	
+	
+Slide 42
+--------
+	Adding a file to staging area
+	git add Abc.txt
+	
+	git status
+		Notice add files and untracked files.
+		
+	
+Slide 43
+--------
+	Commit
+		git commit -m "Learn git commit"
+		
+	
+Slide 44
+--------
+vi Abc.txt
+	Make some changes
+
+	
+git diff
+	Displays all changes made to the tracked files.
+	
+Slide 45
+--------
+git status
+
+Slide 46
+--------
+git add *
+git commit -a -m "New files added and Abc.txt updated"
+git status
+
+Slide 47
+--------
+	n/a
+
+Slide 48
+--------
+git status
+git rm Efg.txt
+git status
+git rm --cached Abc.txt
+git status
+
+
+Slide 49
+--------
+n/a
+
+Slide 50
+--------
+git status
+add .gitignore
+
+---------------------------
+#ignore .class
+*.class
+---------------------------
+
+Slide 51
+--------
+git status
+
+
+Slide 52
+--------
+git log
+	See 
+		author
+		date
+		comment
+
+
+Slide 53
+--------
+ git commit --amend
+ opens your editor
+	Make changes, save and close
+ git log
+ 
+Slide 54
+--------
+n/a
+
+Slide 55
+--------
+n/a
+
+Slide 56
+--------
+git tag -a @author <<commit id>> -m Vilas
+#Find the commit id using 
+git log
+
+git log # Verify @author tag appears in the log now.
+git tag # also displays @author
+git show @author
+
+
+Slide 57
+--------
+n/a
+
+
+Rest are not commands to be execute.
+
+
+Slide 61
+--------
+Ensure to create a blank repo now.
+
+
+Slide 62
+--------
+git remote add origin https://github.com/vilasvarghese/edureka.git
+
+
+Slide 63
+--------
+git push origin master
+
+
+
+Slide 64
+--------
+git remote add origin https://github.com/vilasvarghese/edureka.git
+
+
+
+
+
+
+
+
