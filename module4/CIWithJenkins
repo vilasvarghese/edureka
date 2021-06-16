@@ -1,0 +1,421 @@
+CI with Jenkins
+
+Manage Jenkins
+	Global Tool Configuration
+		Maven
+	Security
+		Configure Global Security
+			Authorization
+				Any One can do anything
+					least secured
+				Legacy
+					Use existing projects
+				Logged in users can do anything
+					don't recommend.
+				Matrix based security
+					Best practices.
+					
+				Project-based Matrix Authorization strategy
+					In this you need to give privilege at project/job level apart from giving it at this level.
+				
+	We want to setup audit log
+	--------------------------
+		who did what?
+	
+		Audit Trail plugin
+			We need to install
+		Configure System
+			Setting more on server level.
+			
+			Scroll down to Audit Trail		
+				Log file: /var/lib/jenkins/audit/JenkinsAudit.log
+				Size: 5MB
+				LogFile count: 2
+				Log Seperator: /
+				Save
+			restart jenkins
+			On terminal
+			/var/lib/jenkins/
+				chmod 777 audit
+			
+			
+			Start a job	
+				verify if files are created in /var/lib/jenkins/audit
+			
+		On terminal
+			cd /var/lib/jenkins
+			ls -ltr | grep Audit
+				
+	Setup notification
+	------------------
+		Install following plugins
+			Email Extension
+			Email Extension Template Plugin
+			
+	Where configure notification
+	---------------------------
+	Click	Manage Jenkins
+				Configure System
+					Extended Email Notification
+						SMTP server: smtp.gmail.com
+						Default user Email  suffix: n/a
+					
+						Click Advanced
+							Check 
+								SMTP Authentication
+								Use SSL
+							Username: vilasdockerkubernetes@gmail.com
+							pwd: <?>
+							SMTP Port: 465
+						Check 
+							Test config. by sending test mail.
+							Email: vilas_varghese@yahoo.com
+						Click : Test Configuration
+-------------------------------------
+
+Two Step Verification should be turned off.
+	https://support.google.com/accounts/answer/1064203?hl=en
+Allow Less Secure App(should be turned on).
+	https://myaccount.google.com/lesssecureapps
+-------------------------------------------							
+					
+			Free style projects
+				Post Build Action
+					Email Notification
+						Recipient
+							vilas@edureka.co
+							
+		Master Slave Architecture				
+							
+		Adding Slave Node
+		-----------------
+		Why Slave?
+		Master Slave Architecture
+		
+-------------------------------------------------------------------
+Add Node: 
+
+Very imp: Need java8 or more for this.
+
+	node: Node1
+	PermanentAgent: 
+	Click OK
+	
+	Configuration
+		Name: 
+		Description:
+		Root directory
+			create a directory
+			chmod 777 in the directory 
+		pwd and copy paste
+		Labels: Node
+	Host: Host name of client
+	Try ssh from master to client and confirm it is working.
+	
+	Give credentials
+		select Username with password
+		username: 
+		password: 
+		Click Add
+		
+	Select the credentials created above.
+	
+	Host key fiel verification strategy
+		select Manually hosted key verification strategy
+		imp: uncheck "Require manual verification of initial connection"
+		
+	Port: 22
+	JavaPath : /usr/bin/java
+	Availability : Default
+	
+	Save and Launch
+	
+	
+	Create a new job 
+		Select "Restrict where this project can be run"
+		Node or Node1
+	In shell script
+		mkdir vilas
+		
+	Execute the job
+	
+	on terminal
+		cd /home/edureka/jenkins/workspace/testnode
+		ls
+			vilas will be listed.
+			
+-------------------------------------------------------------------		
+		
+		Jenkins
+			Manage Jenkins
+				Scroll down
+				Manage Node
+				
+-----------------------------------------
+If Launch via Java web start option is missing.
+
+This question was asked elsewhere: https://stackoverflow.com/a/38740924
+You have to enable the TCP port of JNLP agents to enable this option for slaves.
+Manage Jenkins > Configure Global Security > TCP port for JNLP agents
+-----------------------------------------				
+				
+			2 VM
+				Mange n
+				o Add a node
+					Nodes 
+					Name: node1
+					Desc
+					No. of executors
+					Remote root dir.
+					Labels: Just a label
+						Can give the same name to other nodes
+						Job's can be schedul 
+					Uage
+					Launch method
+						
+						
+				Go to the Node
+				copy the join link
+				
+		Go to the slave machine
+		
+		ip:
+			master : 192.168.56.101
+			slave : 192.168.56.102
+			
+			ip a 
+			
+		in the browser
+		
+		http://192.168.56.101:8080/
+			Manage jenkins
+			Manage Nodes
+			
+			download agent.jar
+			
+			open the containing folder 
+			/home/Downloads
+			
+			cd /home/Downloads
+			in the join command update localhost - ip of master
+			paste it and execute
+			
+			
+			Once it has got executed
+			
+	Go to master
+		X mark should be gone.
+		
+#############################################################		
+		Install following plugin
+			Build Pipeline 
+			Pipeline timeine
+			
+	Go to jenkins dashboard
+
+		Create a free style project
+		
+			git hub repo.
+			https://github.com/vilasvarghese/DemoRepo.git			
+			go to DemoRepo.
+		
+		
+		
+		Build	
+			Build Triggers	
+				Poll SCM would need configuration on git side as well.
+				
+				Git hub 
+					repo
+						settings
+							Webhooks
+								Add webhook
+								
+								payload URL
+									jenkins url project
+									
+						https://url/project/ #please note slash is also critical.
+						
+		Build 
+			Invoke top level maven targets
+			Goals: test
+			
+			
+				
+		Chain projects
+			Create a job 
+			Create a post-job run another job.
+			
+			
+		Create maven test
+			minute 40 +
+			
+			
+			
+		
+Pipeline video
+	https://www.youtube.com/watch?v=7KCS70sCoK0
+	
+	Reading 5
+	
+	
+	Jenkins Pipeline as a Code
+	
+	End to end deployment for a project
+		Part of pipeline
+		
+	Types of pipeline
+		Scripted
+			node{
+			}
+			
+			Lenient in syntax
+			with in jenkins portal
+			
+		Declarative
+			pipeline{
+			}
+			Strict
+			jenkins file and added to github
+			
+---------------------------------------------------			
+	Scripted				Declarative
+---------------------------------------------------	
+	Old way					New way
+	Lenient in syntax		Stricter in syntax
+	in jenkins portal		In Jenkinsfile. added to github
+	node{					pipeline{
+	//groovy script			//
+	}						}
+	More powerful			Easy to get started.
+---------------------------------------------------
+
+
+			
+	Block in pipeline	
+		Node
+			Just Node: run on the master
+		Stages
+			Can be devops stages/ CI/CD workflow
+			
+		Directives
+			Options
+			Parameters
+			Environment
+			Tools
+		Steps
+			Most imp.
+			Actual action block
+			
+Create  pipeline			
+	New Item
+	Pipeline
+		General
+		Build Trigger
+		(No SCM section)
+		Pipleline
+			Pipeline script from SCM
+		
+---------------------------------------------------
+Lab1		
+node{
+ stage('Checkout') {
+	git 'https://github.com/edureka-git/DevOpsClassCodes'
+ }
+ stage('Build') {
+	 dir('') {
+	 sh 'mvn clean package'
+	}
+ }
+}
+---------------------------------------------------
+----------------------------------------------			
+1. Install Publisher HTML plugin
+
+Lab2
+#!/usr/bin/env groovy
+import hudson.model.*
+import hudson.EnvVars
+import groovy.json.JsonSlurperClassic
+import groovy.json.JsonBuilder
+import groovy.json.JsonOutput
+import java.net.URL
+try {
+
+node{
+ stage('Checkout') {
+	git 'https://github.com/edureka-git/DevOpsClassCodes'
+ }
+ stage('Build') {
+	 dir('') {
+	 sh 'mvn clean package'
+	}
+ }
+ 
+ stage ('Email') {
+	emailext attachLog: true, body: 'The status of the build can be obtained from the build log attached', subject: 'The build update is ', to: 'vilas@edureka.co'
+ }
+ stage('Deployment') {
+	//Deployment
+	 script {
+		 echo "deployment"
+		 sh 'cp /var/lib/jenkins/workspace/<job name>/target/addressbook.war /opt/tomcat/webapps/'
+	 }
+ }
+ 
+ stage('publish html report') {
+	 echo "publishing the html report"
+	 publishHTML([allowMissing: false, alwaysLinkToLastBuild:false, keepAll: false, reportDir: '', reportFiles: 'index.html', reportName:'HTML Report', reportTitles: ''])
+ }
+ stage('clean up') {
+	 echo "cleaning up the workspace"
+	 cleanWs()
+ }
+	}// node
+} // try end
+finally {
+	(currentBuild.result != "ABORTED") && node("master") {
+	 // Send e-mail notifications for failed or unstable builds.
+	 // currentBuild.result must be non-null for this step to work.
+	 step([$class: 'Mailer',
+	 notifyEveryUnstableBuild: true,
+	 recipients: 'some email id',
+	 sendToIndividuals: true])
+}
+}
+	
+-----------------------------------------------
+From video		
+node{
+	stage('scm'){
+	git 'https://github.com/vilasvarghese/maven_demo.git'
+	}
+	stage('build'){
+	def mvnhome = tool name: 'mymaven', type: 'maven'
+	bat "
+	}
+}		
+
+
+pipeline{
+	agent any #can be node, label - required attribute
+	stages {	#required attribute
+		stage("build"){
+			steps{
+				echo 'building the application'
+			}
+		}
+		
+		stage("test"){
+			steps{
+				echo '
+			}
+		}
+		
+		stage("deploy"){
+			steps{
+				echo '
+			}
+		}
+	}
+}

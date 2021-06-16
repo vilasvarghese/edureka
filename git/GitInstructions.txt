@@ -68,9 +68,12 @@ Slide 47
 
 Slide 48
 --------
+#Delete the file from the staging and working area.
 git status
 git rm Efg.txt
 git status
+
+#Alternatively to delete the file from staging but retain in working area.
 git rm --cached Abc.txt
 git status
 

@@ -1,0 +1,381 @@
+1. Create a new branch
+	git branch feature1
+	
+2. Switch to this newly created branch
+	git checkout feature1
+	
+3. Create and switch into a branch
+	1 + 2
+	git checkout -b feature2
+	
+4. List all branches - find current branch
+	git branch
+	
+Merge branch
+------------	
+5. Merge branches
+	branch mentioned is merged into the current branch
+	
+	#So being in master
+	git checkout master
+	git merge feature1
+	
+6. Delete merged branch
+	git branch -d feature1
+	
+7. Delete unmerged branch
+	git branch -D feature1
+	
+
+---------------------------------------------------------------
+   78  git branch feature1
+   79  git clone https://github.com/vilasvarghese/demo.git
+   80  clear
+   81  cd demo/
+   82  ls
+   83  clear
+   84  git branch feature1
+   85  git branch
+   86  git checkout feature1 
+   87  git branch
+   88  mkdir test
+   89  ls
+   90  git checkout master
+   91  ls
+   92  git branch
+   93  git add *
+   94  git commit -m "added test"
+   95  git config --global user.email "vilas.edureka@edureka.co"
+   96  git config --global user.name "Vilas Varghese"
+   97  git commit -m "added test"
+   98  git branch feature1
+   99  git checkout feature1
+  100  git status
+  101  ls
+  102  cd test
+  103  ls
+  104  touch tata.txt
+  105  cd ..
+  106  git status
+  107  vi test/tata.txt 
+  108  git status
+  109  cd test/
+  110  git status
+  111  ls
+  112  cd ..
+  113  git status
+  114  git checkout master
+  115  git status
+  116  git checkout featuer1
+  117  git checkout feature1
+  118  git branch
+  119  git add *
+  120  git commit -m "adding test"
+  121  git push origin master
+  122  git push origin feature1
+  123  history
+
+----------------------------------------------------------------------------------	
+	
+
+Merge Conflict
+--------------
+8. Merge confict happens while merging branches.
+	Create a scenario of merge conflict.
+	
+	git checkout master
+		Create HelloWorld.java
+			write Hello World program in it
+			
+		git branch -b branch1
+			modify HelloWorld.java - change sop
+			git add .
+			git commit -m "testing merge conflict"
+			
+		
+		
+	git merge feature1 
+		with some error.
+	
+9. Set a default merge tool 
+	git config --global merge.tool kdiff3
+	
+10. Merge tool automtically detects conflict
+		git mergetool
+		
+		
+---------------------------------------------------------------------------------
+  156  vi Ac.txt
+			Line from master
+  157  git add .
+  158  git commit -m "master"
+  159  git checkout -b br1
+  160  vi Ac.txt
+			Line from master - br1
+  161  git add .
+  162  git commit -m "br1"
+  163  git checkout master
+  166  git branch
+  168  git checkout br1
+  169  git status
+  170  vi Ac.txt
+			Line from master - master
+  171  git checkout master
+  172  vi Ac.txt
+  173  git config merge.tool vimdiff
+  174  git config merge.conflictstyle diff3
+  175  git branch
+  176  git status
+  177  git add .
+  178  git commit -m "updated master"
+  179  git merge br1
+		Error
+  180  git mergetool
+		Use vi style editing.
+  181  vi Ac.txt
+
+  183  git branch -D br1
+		git clean -fn #clean all extra files created by git.
+		rm -rf .Ac*
+		rm -rf Ac_*
+		git status and confirm no untracked files are present.
+		git add .
+		git commit -m "message"
+
+
+---------------------------------------------------------------------  
+		
+----------------------------------------------------------------------------------		
+confirm if the following is working
+sudo apt-get update
+sudo apt-get install kdiff3
+
+git config --global --add merge.tool kdiff3
+git config --global --add mergetool.kdiff3.path "/usr/bin/kdiff3"
+git config --global --add mergetool.kdiff3.trustExitCode false
+git config --global --add mergetool.prompt false
+
+git config --global --add diff.guitool kdiff3
+git config --global --add difftool.kdiff3.path "/usr/bin/kdiff3"
+git config --global --add difftool.kdiff3.trustExitCode false
+git config --global --add difftool.prompt false	
+----------------------------------------------------------------------------------
+
+integrate two branches
+	git merge
+	git rebase
+	
+	
+https://www.youtube.com/watch?v=CRlGDDprdOQ	
+	master
+		m1
+		m2
+			f1 - feature1 started.
+			f2
+		m3
+		
+		rebase
+			m1
+			m2
+			m3
+			?
+		
+		merge
+			m1
+			m2
+			m3
+			?
+			
+-------------------------------------------------------------------------------------
+	git checkout master
+	vi master
+		m1
+	git add .
+	git commit -m "m1"
+	
+	git checkout -b f1
+	vi feature
+		f1
+	git add .
+	git commit -m "f1"
+	git log
+		m1 and f1 seen in log
+	
+	git checkout master
+	git log
+		only m1
+		no feature file
+
+	vi master
+		m1
+		m2
+	git add .
+	git commit -m "m2"
+	git log
+		m1 and m2 seen. but not f1
+	
+	git checkout f1
+	git rebase master
+	git log
+		m1 m2 f1
+		what happened?
+		so picks master and applies delta of master and feature on it.
+		
+	git checkout master
+	vi master
+		m1
+		m2
+		m3
+	
+	git add .
+	git commit -m "m3"
+	git log
+		no f1, only m1, m2, m3
+	
+	git merge f1
+	git log
+		m1, m2, m3, f1.
+		so starts from master and applies delta on it.
+	
+
+
+-------------------------------------------------------------------
+  216  rm -rf Ac_*
+  217  ls
+  218  git status
+  219  git rm Ac*
+  220  git status
+  221  git add .
+  222  git commit -m "remove Ac_ files
+  223  git branch
+  224  git checkout f1
+  225  git status
+  226  ls
+  227  git log
+  228  git rebase master
+  229  git log
+  230  clear
+  231  git checkout master
+  232  git branch
+  233  vi master
+  234  git add .
+  235  git commit -m "m2"
+  236  git log
+  237  git checkout f1
+  238  vi feature
+  239  git log
+  240  git add .
+  241  git commit -m "f3"
+  242  git log
+  243  git status
+  244  git checkout master
+  245  git merge f1
+
+-------------------------------------------------------------------------------------			
+
+
+Git Stashing
+############
+
+  135  vi file1.txt
+  136  vi file2.txt
+  137  git add file1.txt 
+  138  git status
+  139  git stash "first stash"
+  140  git stash save "first stash"
+  141  git status
+  142  git add .
+  143  git status
+  144  git stash save 'first stash'
+  145  git stash list
+  146  git checkout -b branch1
+  147  git ls
+  148  ls
+  149  git checkout master
+  150  ls
+  151  ls fi*
+  152  git branch
+  153  git branch f1
+  154  git checkout f1
+  155  ls
+  156  clear
+  157  git stash list
+  158  git stash apply stash@{0}
+  159  ls
+  160  vi file1.txt
+  
+  Get back and retain a stash
+  161  git stash apply stash@{1}
+  162  ls
+  163  history
+  164  git stash list
+  
+  Get back and delete a  stash
+  165  git stash pop
+  166  git stash list
+  167  git stash pop
+  168  git stash save 'test'
+  169  git stash list
+  
+  To delete a particular stash
+  170  git stash drop stash@{0}
+  
+  To delete all stash
+  171  git stash clear
+  172  git stash list
+  173  ls
+  174  git status
+  175  git revert HEAD
+  176  git log
+  177  history
+
+
+Git Revert
+############
+	Undo the last change
+	But creates a new commit for reverting.
+	
+	git revert HEAD
+	Interview question.
+	
+Git Reset
+############
+	git log
+	- get a commit id
+	git reset <commit id>>
+		Retain files added but not the commits.
+	
+	git reset --hard <<commit id>>
+		Delete all files added in between.
+		
+	
+
+
+Commits
+	1
+	2
+	3
+	4
+	5
+	6
+	7
+	8
+	
+	what to revert back to 4
+	
+	git reset <commit id of 4>
+	
+	
+---------------------------------
+Create a pull request
+---------------------
+
+Find a project you want to contribute to.
+Fork it.
+Clone it to your local system.
+Make a new branch.
+Make your changes.
+Push it back to your repo.
+Click the Compare & pull request button.
+Click Create pull request to open a new pull request.
+-------------------------------------------	

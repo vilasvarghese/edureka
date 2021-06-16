@@ -1,0 +1,23 @@
+Explain basics of Jenkins
+Creating a new Job
+	
+Maven needs to do 2 things
+	
+	
+1. 	Manage Jenkins
+	Global Tool Configuration
+	Maven Installation
+	Add Maven
+	Select Install automatically
+	
+	
+2. Manage Jenkins
+	Manage Plugin
+	Maven Integration
+	
+	New Job
+	Maven Project
+	Git
+		https://github.com/vilasvarghese/DemoRepo.git
+	
+	Root : pom.xml
